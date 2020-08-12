@@ -1,0 +1,32 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        {% if not user.is_authenticated %}
+            <a href="{% url 'social:begin' 'vk-oauth2' %}" class="btn">Авторизоваться</a>
+        {% else %}
+            <section class="user-info">
+                <img src="{{ user.photo }}" alt="{{ user.photo }}" class="user-photo">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            </section>
+            <section class="friends-list">
+                {% for friend in user.friend_set.all %}
+                    <div class="friend">
+                        <a href="https://vk.com/{{ friend.domain }}"><img
+                                src="{{ friend.photo_url }}"
+                                alt="{{ friend.photo_url }}"
+                                class="friend-photo"
+                        ></a>
+                        <a href="https://vk.com/{{ friend.domain }}" class="friend-name"
+                        >{{ friend.first_name }} {{ friend.last_name }}</a>
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}
