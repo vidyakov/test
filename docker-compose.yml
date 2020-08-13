@@ -10,7 +10,6 @@ services:
         ports:
           - "80:8080"
         volumes:
-            - ./project/static:/srv/www/test_webim/static
             - ./project/logs:/srv/www/test_webim/logs
             - ./docker/nginx:/etc/nginx/conf.d
         depends_on:
@@ -27,3 +26,5 @@ services:
         ports:
             - 8000:8000
         command: "gunicorn -c gunicorn.py config.wsgi"
+        env_file:
+            ./.env
